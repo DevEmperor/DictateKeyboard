@@ -140,14 +140,34 @@ object DictatePromptDefaults {
             "7) Input: Just checking in with you today -> Output: Just checking in with you today."
 
     /**
-     * Assembles the full auto-formatting request: the [AUTO_FORMATTING_PROMPT] rules, a *language hint*,
-     * and the [transcript] to clean up. Extracted (and unit-tested) so the wording stays stable across
-     * refactors. A null/blank [languageName] becomes `"unknown"`, matching the legacy app's fallback.
+     * Assembles the full auto-formatting request: the [AUTO_FORMATTING_PROMPT] rules, the user's own
+     * rewording instruction when they wrote one ([userInstructionOf]), a *language hint*, and the
+     * [transcript] to clean up. Extracted (and unit-tested) so the wording stays stable across refactors. A
+     * null/blank [languageName] becomes `"unknown"`, matching the legacy app's fallback.
+     *
+     * The user's instruction is said to apply to every transcript: the rules change nothing unless the
+     * speaker asks, and an instruction like "write numbers as digits" is meant for every dictation (#497).
      */
-    fun buildAutoFormattingPrompt(languageName: String?, transcript: String): String =
+    fun buildAutoFormattingPrompt(languageName: String?, transcript: String, userInstruction: String? = null): String =
         AUTO_FORMATTING_PROMPT +
+            (userInstruction?.takeIf { it.isNotBlank() }?.let { "\n\n$USER_INSTRUCTION_LEAD\n$it" } ?: "") +
             "\n\nLanguage hint: " + (languageName?.takeIf { it.isNotBlank() } ?: "unknown") +
             "\n\nTranscript:\n" + transcript
+
+    /** Introduces the user's own instruction inside [buildAutoFormattingPrompt]. */
+    const val USER_INSTRUCTION_LEAD =
+        "The user also set this instruction for every transcript. Apply it even where the rules above would " +
+            "leave the transcript unchanged:"
+
+    /**
+     * The rewording instruction as the user wrote it, or null for none and for the built-in
+     * [REWORDING_BE_PRECISE]. Prompts get either ([buildRewordingRequest]); auto-formatting has output rules of
+     * its own and only takes what the user wrote (#497), which is all the setting promises it: "guidance added
+     * to every rewording request". Takes the resolved system prompt, so the watch, which receives only that,
+     * decides the same way.
+     */
+    fun userInstructionOf(systemPrompt: String?): String? =
+        systemPrompt?.trim()?.takeIf { it.isNotEmpty() && it != REWORDING_BE_PRECISE }
 
     /**
      * Whether [text] looks like the auto-formatting prompt was echoed back verbatim rather than a real
@@ -161,6 +181,7 @@ object DictatePromptDefaults {
             "attentive, adaptive formatting assistant",
             "Follow these rules:",
             "Language hint:",
+            "set this instruction for every transcript",
         )
         return markers.any { text.contains(it, ignoreCase = true) }
     }

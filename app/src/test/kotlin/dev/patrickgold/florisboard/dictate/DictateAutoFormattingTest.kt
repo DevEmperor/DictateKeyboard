@@ -15,6 +15,7 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
+import io.kotest.matchers.string.shouldNotContain
 import io.kotest.matchers.string.shouldStartWith
 
 class DictateAutoFormattingTest : FunSpec({
@@ -46,6 +47,25 @@ class DictateAutoFormattingTest : FunSpec({
         prompt shouldContain "Transcript:\nHallo Welt"
         // The transcript must be the very tail so the model sees it last.
         prompt.endsWith("Transcript:\nHallo Welt") shouldBe true
+        // Without an instruction of the user's own, the request is exactly what it was before #497.
+        prompt shouldNotContain DictatePromptDefaults.USER_INSTRUCTION_LEAD
+    }
+
+    test("the user's own rewording instruction goes into auto-formatting, after the rules (#497)") {
+        val prompt = DictatePromptDefaults.buildAutoFormattingPrompt("English", "I have three apples", "Write numbers as digits.")
+
+        prompt shouldStartWith DictatePromptDefaults.AUTO_FORMATTING_PROMPT
+        prompt shouldContain "\n\n${DictatePromptDefaults.USER_INSTRUCTION_LEAD}\nWrite numbers as digits.\n\nLanguage hint: English"
+        prompt.endsWith("Transcript:\nI have three apples") shouldBe true
+        // A model that echoes the request is still caught by the guard.
+        DictatePromptDefaults.looksLikeAutoFormattingPrompt(DictatePromptDefaults.USER_INSTRUCTION_LEAD) shouldBe true
+    }
+
+    test("only an instruction the user wrote counts, not the built-in one or none (#497)") {
+        DictatePromptDefaults.userInstructionOf("Write numbers as digits.") shouldBe "Write numbers as digits."
+        DictatePromptDefaults.userInstructionOf(DictatePromptDefaults.REWORDING_BE_PRECISE) shouldBe null
+        DictatePromptDefaults.userInstructionOf("  ") shouldBe null
+        DictatePromptDefaults.userInstructionOf(null) shouldBe null
     }
 
     context("hasNoWords keeps wordless transcripts away from the model") {

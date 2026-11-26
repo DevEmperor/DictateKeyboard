@@ -56,7 +56,9 @@ object DictateRewording {
         var text = transcript
 
         if (autoFormatting) {
-            val formatPrompt = DictatePromptDefaults.buildAutoFormattingPrompt(languageName, text)
+            val formatPrompt = DictatePromptDefaults.buildAutoFormattingPrompt(
+                languageName, text, DictatePromptDefaults.userInstructionOf(systemPrompt),
+            )
             text = runCatching {
                 client.complete(ChatRequest.ofUser(chatModel, formatPrompt, reasoningEffort))
                     .text.trim().ifBlank { text }
